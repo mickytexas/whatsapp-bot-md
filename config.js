@@ -74,4 +74,7 @@ module.exports = {
     process.env.WARN_RESET_MESSAGE || `WARN RESET\nUser : &mention\nRemaining : &remaining`,
   WARN_KICK_MESSAGE: process.env.WARN_KICK_MESSAGE || '&mention kicked',
   TRUECALLER: process.env.TRUECALLER,
+  DELETE_TYPE: (process.env.DELETE_TYPE || '').trim(),
+  LIST_TYPE: (process.env.LIST_TYPE || 'poll').trim(),
+  BING_COOKIE: (process.env.BING_COOKIE || '').trim(),
 }

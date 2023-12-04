@@ -23,7 +23,7 @@ bot(
     if (match.startsWith('y2mate;')) {
       const [_, q, id] = match.split(';')
       const result = await y2mate.dl(id, 'video', q)
-      return await message.sendFromUrl(result)
+      return await message.sendFromUrl(result, { quoted: message.data })
     }
     if (!ytIdRegex.test(match))
       return await message.send('*Give me a yt link!*', {
@@ -41,13 +41,14 @@ bot(
       return await message.send('*Not found*', {
         quoted: message.quoted,
       })
-    return await message.sendFromUrl(thumbnail, {
-      caption:
-        '```' +
-        generateList(buttons, title + `(${time})\n`, message.jid, message.participant) +
-        '```',
-      buffer: false,
-    })
+    const list = generateList(buttons, title + `(${time})\n`, message.jid, message.participant)
+    if (list.type === 'text')
+      return await message.sendFromUrl(thumbnail, {
+        caption: '```' + list.message + '```',
+        buffer: false,
+      })
+    return await message.send(list.message, {}, list.type)
+
     // return await message.send(
     // 	await genButtonMessage(
     // 		buttons,
